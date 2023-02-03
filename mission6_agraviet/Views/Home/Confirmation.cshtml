@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Confirmation";
+}
+
+@model mission6_agraviet.Models.MovieSubmission
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+<article class="message is-link">
+    <div class="message-header ">
+        <p>Confirmation</p>
+    </div>
+    <div class="message-body">
+        Thank you! The movie '@Model.title' was submitted to the database.
+    </div>
+    <div class="columns">
+        <div class="column"></div>
+        <div class="column">
+            <a class="button is-primary" asp-controller="Home" asp-action="Index">Home</a>
+            <a class="button is-primary" asp-controller="Home" asp-action="Movies">Submit Another</a>
+        </div>
+        <div class="column"></div>
+    </div>
+</article>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
