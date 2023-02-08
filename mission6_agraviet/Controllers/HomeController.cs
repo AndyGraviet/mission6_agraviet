@@ -13,9 +13,12 @@ namespace mission6_agraviet.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private MovieSubmissionContext blahContext { get; set; }
+
+        public HomeController(ILogger<HomeController> logger, MovieSubmissionContext thisContext)
         {
             _logger = logger;
+            blahContext = thisContext;
         }
 
         public IActionResult Index()
@@ -41,24 +44,28 @@ namespace mission6_agraviet.Controllers
             {
                 return View();
             }
-            if (submission.category == null)
+            else if (submission.category == null)
             {
                 return View();
             }
-            if (submission.director == null)
+            else if (submission.director == null)
             {
                 return View();
             }
-            if (submission.year == 0)
+            else if (submission.year == 0)
             {
                 return View();
             }
-            if (submission.rating == null)
+            else if (submission.rating == null)
             {
                 return View();
             }
-
-            return View("Confirmation", submission);
+            else
+            {
+                blahContext.Add(submission);
+                blahContext.SaveChanges();
+                return View("Confirmation", submission);
+            }
 
         }
 
