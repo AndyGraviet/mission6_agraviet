@@ -28,6 +28,11 @@ namespace mission6_agraviet.Controllers
             return View();
         }
 
+        public IActionResult ViewCollection()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Movies()
         {
