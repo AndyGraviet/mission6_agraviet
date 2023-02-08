@@ -2,18 +2,36 @@
     ViewData["Title"] = "Movie List";
 }
 
+@model List<MovieSubmission> 
 
-<table class="table">
+
+<table class="table is-striped is-hoverable">
     <thead>
-        <tr>
-            <td>Category</td>
-            <td>Movie Title</td>
-            <td>Year</td>
-            <td>Director</td>
-            <td>Rating</td>
-            <td>Edited</td>
-            <td>Lent To</td>
-            <td>Notes</td>
+        <tr class="has-background-primary-light">
+            <td><strong class="is-size-5">Category</strong></td>
+            <td><strong class="is-size-5">Title</strong></td>
+            <td><strong class="is-size-5">Year</strong></td>
+            <td><strong class="is-size-5">Director</strong></td>
+            <td><strong class="is-size-5">Rating</strong></td>
+            <td><strong class="is-size-5">Edited</strong></td>
+            <td><strong class="is-size-5">Lent To</strong></td>
+            <td><strong class="is-size-5">Notes</strong></td>
+
         </tr>
     </thead>
+    <tbody>
+        @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Category.CategoryName</td>
+                    <td>@x.title</td>
+                    <td>@x.year</td>
+                    <td>@x.director</td>
+                    <td>@x.rating</td>
+                    <td>@x.edited</td>
+                    <td>@x.lentTo</td>
+                    <td>@x.notes</td>
+                </tr>
+            }
+    </tbody>
 </table>

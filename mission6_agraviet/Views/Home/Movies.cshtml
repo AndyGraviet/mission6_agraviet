@@ -12,16 +12,12 @@
     <!--NEED TO FIGURE OUT HOW SELECT INPUTS WORK IN ASP-->
     <div class="field">
         <div class="select">
-            <label class="label" asp-for="category">Category</label>
-            <select asp-for="category">
-                <option value="Action">Action</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Drama">Drama</option>
-                <option value="Horror/Suspense">Horror / Suspense</option>
-                <option value="Miscellaneous">Miscellaneous</option>
-                <option value="Television">Television</option>
-                <option value="VHS">VHS</option>
+            <label class="label" asp-for="CategoryId">Category</label>
+            <select asp-for="CategoryId">
+                @foreach (Category c in ViewBag.Categories)
+                {
+                    <option value="@c.CategoryID">@c.CategoryName</option>
+                }
             </select>
         </div>
     </div>

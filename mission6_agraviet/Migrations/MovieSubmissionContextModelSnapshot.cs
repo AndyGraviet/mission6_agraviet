@@ -15,15 +15,75 @@ namespace mission6_agraviet.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
+            modelBuilder.Entity("mission6_agraviet.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Misc"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "TV"
+                        },
+                        new
+                        {
+                            CategoryID = 9,
+                            CategoryName = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("mission6_agraviet.Models.MovieSubmission", b =>
                 {
                     b.Property<int>("submissionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("director")
                         .IsRequired()
@@ -51,13 +111,15 @@ namespace mission6_agraviet.Migrations
 
                     b.HasKey("submissionId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             submissionId = 1,
-                            category = "Action",
+                            CategoryId = 1,
                             director = "Joss Whedon",
                             edited = false,
                             lentTo = "NA",
@@ -69,7 +131,7 @@ namespace mission6_agraviet.Migrations
                         new
                         {
                             submissionId = 2,
-                            category = "Action",
+                            CategoryId = 1,
                             director = "Tim Burton",
                             edited = false,
                             lentTo = "NA",
@@ -81,7 +143,7 @@ namespace mission6_agraviet.Migrations
                         new
                         {
                             submissionId = 3,
-                            category = "Comedy",
+                            CategoryId = 2,
                             director = "Jonathan Lynn",
                             edited = false,
                             lentTo = "NA",
@@ -90,6 +152,15 @@ namespace mission6_agraviet.Migrations
                             title = "Clue",
                             year = 1985
                         });
+                });
+
+            modelBuilder.Entity("mission6_agraviet.Models.MovieSubmission", b =>
+                {
+                    b.HasOne("mission6_agraviet.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

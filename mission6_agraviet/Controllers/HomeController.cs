@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using mission6_agraviet.Models;
 
@@ -13,9 +14,12 @@ namespace mission6_agraviet.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private MovieSubmissionContext blahContext { get; set; }
+
+        public HomeController(ILogger<HomeController> logger, MovieSubmissionContext thisContext)
         {
             _logger = logger;
+            blahContext = thisContext;
         }
 
         public IActionResult Index()
@@ -28,14 +32,10 @@ namespace mission6_agraviet.Controllers
             return View();
         }
 
-        public IActionResult ViewCollection()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = blahContext.categories.ToList();
             return View();
         }
 
@@ -46,27 +46,35 @@ namespace mission6_agraviet.Controllers
             {
                 return View();
             }
-            if (submission.category == null)
+            else if (submission.director == null)
             {
                 return View();
             }
-            if (submission.director == null)
+            else if (submission.year == 0)
             {
                 return View();
             }
-            if (submission.year == 0)
+            else if (submission.rating == null)
             {
                 return View();
             }
-            if (submission.rating == null)
+            else
             {
-                return View();
+                blahContext.Add(submission);
+                blahContext.SaveChanges();
+                return View("Confirmation", submission);
             }
-
-            return View("Confirmation", submission);
 
         }
 
+        public IActionResult ViewCollection()
+        {
+            var submissions = blahContext.responses
+                .Include(x => x.Category)
+                .ToList();
+            return View(submissions);
+        }
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -74,4 +82,5 @@ namespace mission6_agraviet.Controllers
         }
     }
 }
+
 

@@ -9,8 +9,11 @@ namespace mission6_agraviet.Models
         [Required]
         public int submissionId { get; set; }
 
+        //build foreign key migrations
         [Required]
-        public string category { get; set; }
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
 
         [Required]
         public string title { get; set; }
