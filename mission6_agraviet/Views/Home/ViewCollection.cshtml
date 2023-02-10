@@ -16,7 +16,8 @@
             <td><strong class="is-size-5">Edited</strong></td>
             <td><strong class="is-size-5">Lent To</strong></td>
             <td><strong class="is-size-5">Notes</strong></td>
-
+            <td><strong class="is-size-5">Edit</strong></td>
+            <td><strong class="is-size-5">Delete</strong></td>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +32,8 @@
                     <td>@x.edited</td>
                     <td>@x.lentTo</td>
                     <td>@x.notes</td>
+                    <td><a class="button is-primary" asp-controller="Home" asp-action="Edit" asp-route-submissionId="@x.submissionId"><strong>Edit</strong></a></td>
+                    <td><a class="button is-danger" asp-controller="Home" asp-action="Delete" asp-route-submissionId="@x.submissionId"><strong>Delete</strong></a></td>
                 </tr>
             }
     </tbody>

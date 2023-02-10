@@ -42,29 +42,16 @@ namespace mission6_agraviet.Controllers
         [HttpPost]
         public IActionResult Movies(MovieSubmission submission)
         {
-            if (submission.title == null)
-            {
-                return View();
-            }
-            else if (submission.director == null)
-            {
-                return View();
-            }
-            else if (submission.year == 0)
-            {
-                return View();
-            }
-            else if (submission.rating == null)
-            {
-                return View();
-            }
-            else
+            if (ModelState.IsValid)
             {
                 blahContext.Add(submission);
                 blahContext.SaveChanges();
                 return View("Confirmation", submission);
+            } else
+            {
+                ViewBag.Categories = blahContext.categories.ToList();
+                return View(submission);
             }
-
         }
 
         public IActionResult ViewCollection()
@@ -74,7 +61,41 @@ namespace mission6_agraviet.Controllers
                 .ToList();
             return View(submissions);
         }
-        
+
+        [HttpGet]
+        public IActionResult Edit(int submissionId)
+        {
+            ViewBag.Categories = blahContext.categories.ToList();
+            var submission = blahContext.responses.Single(x => x.submissionId == submissionId);
+            return View("Movies", submission);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MovieSubmission blah)
+        {
+            blahContext.Update(blah);
+            blahContext.SaveChanges();
+
+            return RedirectToAction("ViewCollection");
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int submissionId)
+        {
+            var submission = blahContext.responses.Single(x => x.submissionId == submissionId);
+            
+            return View(submission);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MovieSubmission submission)
+        {
+            blahContext.responses.Remove(submission);
+            blahContext.SaveChanges();
+            return RedirectToAction("ViewCollection");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
